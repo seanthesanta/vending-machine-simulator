@@ -2,6 +2,8 @@
 #include <string.h>
 
 //#define DEBUG_productLeft
+//#define DEBUG_fgets
+#define DEBUG_strcpy
 
 int keyboardEventINT()
 {
@@ -10,12 +12,24 @@ int keyboardEventINT()
     return key;
 }
 
-char* keyboardEventCHAR(const int MAX_STRING_SIZE)
-{
-    char key[MAX_STRING_SIZE];
-    fgets(key, MAX_STRING_SIZE, stdin);
-    return key;
-}
+//void keyboardEventCHAR(char* str, const int MAX_STRING_SIZE)
+//{
+//    char input[MAX_STRING_SIZE];
+//    #ifdef DEBUG_fgets
+//    printf("BUG?\n");
+//    #endif // DEBUG_fgets
+//    fgets(input, MAX_STRING_SIZE, stdin);
+//    #ifdef DEBUG_fgets
+//    printf("BUG!\n");
+//    #endif // DEBUG_fgets
+//    #ifdef DEBUG_strcpy
+//    printf("BUG?\n");
+//    #endif // DEBUG_strcpy
+//    strcpy(str, input);
+//    #ifdef DEBUG_strcpy
+//    printf("BUG!\n");
+//    #endif // DEBUG_strcpy
+//}
 
 void readProductInformation()
 {
@@ -27,12 +41,6 @@ void readProductInformation()
     printf("E. Coffee ($7)\n");
 
     return;
-}
-
-void updateName(char* name, char* to)
-{
-    memset(name, ' ', sizeof(name));
-    name = to;
 }
 
 void updatePrice(int* price, int to)
@@ -228,6 +236,9 @@ void openServiceMenu(int* availableProduct, int* productLeft, int* insertedCoins
             printf("0. Go back\n");
             printf("Your choice: ");
 
+            // Variable for inputting string
+            char input[MAX_STRING_SIZE];
+
             // User input
             switch(keyboardEventINT())
             {
@@ -305,7 +316,10 @@ void openServiceMenu(int* availableProduct, int* productLeft, int* insertedCoins
                     printf("You are changing product A.\n");
                     printf("(9-4-1) Changing product\n");
                     printf("Enter new product name: ");
-                    updateName(name[0], keyboardEventCHAR(MAX_STRING_SIZE));
+//                    keyboardEventCHAR(name[0], MAX_STRING_SIZE);
+                    fgets(input, MAX_STRING_SIZE, stdin);
+
+                    strcpy(name[0], input);
                     printf("Enter new product price: ");
                     updatePrice(price, keyboardEventINT());
                     productLeft[0] = NO_OF_PRODUCT;
@@ -315,7 +329,7 @@ void openServiceMenu(int* availableProduct, int* productLeft, int* insertedCoins
                     printf("You are changing product B.\n");
                     printf("(9-4-2) Changing product\n");
                     printf("Enter new product name: ");
-                    updateName(name[1], keyboardEventCHAR(MAX_STRING_SIZE));
+//                    keyboardEventCHAR(name[1], MAX_STRING_SIZE);
                     printf("Enter new product price: ");
                     updatePrice(price+1, keyboardEventINT());
                     productLeft[1] = NO_OF_PRODUCT;
@@ -325,7 +339,7 @@ void openServiceMenu(int* availableProduct, int* productLeft, int* insertedCoins
                     printf("You are changing product C.\n");
                     printf("(9-4-3) Changing product\n");
                     printf("Enter new product name: ");
-                    updateName(name[2], keyboardEventCHAR(MAX_STRING_SIZE));
+//                    keyboardEventCHAR(name[2], MAX_STRING_SIZE);
                     printf("Enter new product price: ");
                     updatePrice(price+2, keyboardEventINT());
                     productLeft[2] = NO_OF_PRODUCT;
@@ -335,7 +349,7 @@ void openServiceMenu(int* availableProduct, int* productLeft, int* insertedCoins
                     printf("You are changing product D.\n");
                     printf("(9-4-4) Changing product\n");
                     printf("Enter new product name: ");
-                    updateName(name[3], keyboardEventCHAR(MAX_STRING_SIZE));
+//                    keyboardEventCHAR(name[3], MAX_STRING_SIZE);
                     printf("Enter new product price: ");
                     updatePrice(price+3, keyboardEventINT());
                     productLeft[3] = NO_OF_PRODUCT;
@@ -345,11 +359,13 @@ void openServiceMenu(int* availableProduct, int* productLeft, int* insertedCoins
                     printf("You are changing product E.\n");
                     printf("(9-4-5) Changing product\n");
                     printf("Enter new product name: ");
-                    updateName(name[4], keyboardEventCHAR(MAX_STRING_SIZE));
+//                    keyboardEventCHAR(name[4], MAX_STRING_SIZE);
                     printf("Enter new product price: ");
                     updatePrice(price+4, keyboardEventINT());
                     productLeft[4] = NO_OF_PRODUCT;
                     printf("The new product E has been filled to full.\n");
+                    break;
+                default:
                     break;
                 }
                 break;
@@ -396,13 +412,7 @@ int main()
 
     //Initial product names and product prices as in the project guideline
     int price[5]; price[0] = 10; price[1] = 6; price[2] = 5; price[3] = 8; price[4] = 7;
-    char name[NO_OF_PRODUCT][MAX_STRING_SIZE];
-    memset(name, ' ', sizeof(name));
-    name[0][MAX_STRING_SIZE] = "Juice";
-    name[1][MAX_STRING_SIZE] = "Cola";
-    name[2][MAX_STRING_SIZE] = "Tea";
-    name[3][MAX_STRING_SIZE] = "Water";
-    name[4][MAX_STRING_SIZE] = "Coffee";
+    char name[NO_OF_PRODUCT][MAX_STRING_SIZE] = {"Juice", "Cola", "Tea", "Water", "Coffee"};
 
     int productLeft[5];
     for (int i = 0; i < 5; i++) productLeft[i] = MAX_PRODUCT_LEFT;
