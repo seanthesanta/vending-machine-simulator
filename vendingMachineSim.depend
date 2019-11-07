@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1573032312 source:c:\users\s1155138058\desktop\vendingmachinesim\main.c
+	<stdio.h>
+	<string.h>
+
