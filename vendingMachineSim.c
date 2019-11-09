@@ -5,31 +5,12 @@
 //#define DEBUG_fgets
 #define DEBUG_strcpy
 
-int keyboardEventINT()
+int readInt()
 {
-    int key;
-    scanf("%d", &key);
-    return key;
+    int input;
+    scanf("%d", &input);
+    return input;
 }
-
-//void keyboardEventCHAR(char* str, const int MAX_STRING_SIZE)
-//{
-//    char input[MAX_STRING_SIZE];
-//    #ifdef DEBUG_fgets
-//    printf("BUG?\n");
-//    #endif // DEBUG_fgets
-//    fgets(input, MAX_STRING_SIZE, stdin);
-//    #ifdef DEBUG_fgets
-//    printf("BUG!\n");
-//    #endif // DEBUG_fgets
-//    #ifdef DEBUG_strcpy
-//    printf("BUG?\n");
-//    #endif // DEBUG_strcpy
-//    strcpy(str, input);
-//    #ifdef DEBUG_strcpy
-//    printf("BUG!\n");
-//    #endif // DEBUG_strcpy
-//}
 
 void readProductInformation()
 {
@@ -40,12 +21,6 @@ void readProductInformation()
     printf("D. Water ($8)\n");
     printf("E. Coffee ($7)\n");
 
-    return;
-}
-
-void updatePrice(int* price, int to)
-{
-    *price = to;
     return;
 }
 
@@ -91,7 +66,7 @@ void insertCoin(char* enoughMoney, int* insertedCoins, int* depositedMoney)
         printf("Your choice: ");
 
         // User input
-        switch(keyboardEventINT())
+        switch(readInt())
         {
         case 1:
             *depositedMoney += 1;
@@ -155,7 +130,7 @@ void pressProductButton(char* availableProduct, char* enoughMoney, int* productL
         printf("Your choice: ");
 
         // User input
-        switch(keyboardEventINT())
+        switch(readInt())
         {
         case 1:
             printf("You have pressed button A.\n");
@@ -209,11 +184,16 @@ void pressReturnButton(char* availableProduct, int* depositedMoney)
     return;
 }
 
+void readChar(char* input)
+{
+    scanf("%s", input);
+}
+
 void openServiceMenu(int* availableProduct, int* productLeft, int* insertedCoins, int* depositedMoney, int* price, char* name, const int NO_OF_PRODUCT, const int MAX_PRODUCT_PRICE, const int MAX_STRING_SIZE)
 {
     printf("Opening service menu. Access code is required.\nEnter access code: ");
     // If incorrect code entered, back to main menu
-    if (keyboardEventINT() != 1110)
+    if (readInt() != 1110)
     {
         printf("Incorrect code!\n");
         status(availableProduct, *depositedMoney);
@@ -236,11 +216,11 @@ void openServiceMenu(int* availableProduct, int* productLeft, int* insertedCoins
             printf("0. Go back\n");
             printf("Your choice: ");
 
-            // Variable for inputting string
-            char input[MAX_STRING_SIZE];
+            // Declare variable for input
+            char input[20];
 
             // User input
-            switch(keyboardEventINT())
+            switch(readInt())
             {
             case 1:
                 printf("(9-1) Machine status\n");
@@ -259,12 +239,12 @@ void openServiceMenu(int* availableProduct, int* productLeft, int* insertedCoins
                 break;
             case 2:
                 printf("(9-2) Inserted coins are being withdrawn.\n");
-                if (*depositedMoney > 1) printf("$%d are withdrawn.\n");
+                if (*depositedMoney > 1) printf("$%d are withdrawn.\n", *depositedMoney);
                 else printf("$%d is withdrawn.\n");
                 *depositedMoney = 0;
                 break;
             case 3:
-                printf("Which product would you like to refill?\n");
+                printf("(9-3) Which product would you like to refill?\n");
                 printf("1. A\n");
                 printf("2. B\n");
                 printf("3. C\n");
@@ -273,7 +253,7 @@ void openServiceMenu(int* availableProduct, int* productLeft, int* insertedCoins
                 printf("0. Go back\n");
                 printf("Your choice: ");
 
-                switch(keyboardEventINT())
+                switch(readInt())
                 {
                 case 1:
                     productLeft[0] = NO_OF_PRODUCT;
@@ -310,69 +290,25 @@ void openServiceMenu(int* availableProduct, int* productLeft, int* insertedCoins
                 printf("5. E\n");
                 printf("0. Go back\n");
                 printf("Your choice: ");
-                switch(keyboardEventINT())
+                switch(readInt())
                 {
                 case 1:
-                    printf("You are changing product A.\n");
                     printf("(9-4-1) Changing product\n");
                     printf("Enter new product name: ");
-//                    keyboardEventCHAR(name[0], MAX_STRING_SIZE);
-                    fgets(input, MAX_STRING_SIZE, stdin);
+                    readChar(input);
 
-                    strcpy(name[0], input);
+                    printf("%s", name[0]);
+                    for (int i = 0; i < strlen(input); i++) name[0][i] = input[i];
+                    printf("%s", name[0]);
+
                     printf("Enter new product price: ");
-                    updatePrice(price, keyboardEventINT());
-                    productLeft[0] = NO_OF_PRODUCT;
+                    price[0] = readInt();
                     printf("The new product A has been filled to full.\n");
-                    break;
-                case 2:
-                    printf("You are changing product B.\n");
-                    printf("(9-4-2) Changing product\n");
-                    printf("Enter new product name: ");
-//                    keyboardEventCHAR(name[1], MAX_STRING_SIZE);
-                    printf("Enter new product price: ");
-                    updatePrice(price+1, keyboardEventINT());
-                    productLeft[1] = NO_OF_PRODUCT;
-                    printf("The new product B has been filled to full.\n");
-                    break;
-                case 3:
-                    printf("You are changing product C.\n");
-                    printf("(9-4-3) Changing product\n");
-                    printf("Enter new product name: ");
-//                    keyboardEventCHAR(name[2], MAX_STRING_SIZE);
-                    printf("Enter new product price: ");
-                    updatePrice(price+2, keyboardEventINT());
-                    productLeft[2] = NO_OF_PRODUCT;
-                    printf("The new product C has been filled to full.\n");
-                    break;
-                case 4:
-                    printf("You are changing product D.\n");
-                    printf("(9-4-4) Changing product\n");
-                    printf("Enter new product name: ");
-//                    keyboardEventCHAR(name[3], MAX_STRING_SIZE);
-                    printf("Enter new product price: ");
-                    updatePrice(price+3, keyboardEventINT());
-                    productLeft[3] = NO_OF_PRODUCT;
-                    printf("The new product D has been filled to full.\n");
-                    break;
-                case 5:
-                    printf("You are changing product E.\n");
-                    printf("(9-4-5) Changing product\n");
-                    printf("Enter new product name: ");
-//                    keyboardEventCHAR(name[4], MAX_STRING_SIZE);
-                    printf("Enter new product price: ");
-                    updatePrice(price+4, keyboardEventINT());
-                    productLeft[4] = NO_OF_PRODUCT;
-                    printf("The new product E has been filled to full.\n");
+                    productLeft[0] = NO_OF_PRODUCT;
                     break;
                 default:
                     break;
                 }
-                break;
-            case 5:
-                printf("You have pressed button E.\n");
-                *(availableProduct+4) = 'X';
-                *depositedMoney -= 7;
                 break;
             case 0:
                 quit = 1;
@@ -411,8 +347,8 @@ int main()
     int insertedCoins = 0;
 
     //Initial product names and product prices as in the project guideline
-    int price[5]; price[0] = 10; price[1] = 6; price[2] = 5; price[3] = 8; price[4] = 7;
-    char name[NO_OF_PRODUCT][MAX_STRING_SIZE] = {"Juice", "Cola", "Tea", "Water", "Coffee"};
+    int price[5] = {10, 6, 5, 8, 7};
+    char name[5][20] = {"Juice", "Cola", "Tea", "Water", "Coffee"};
 
     int productLeft[5];
     for (int i = 0; i < 5; i++) productLeft[i] = MAX_PRODUCT_LEFT;
@@ -448,7 +384,7 @@ int main()
         printf("0. Quit\n");
         printf("Your choice: ");
 
-        switch (keyboardEventINT())
+        switch (readInt())
         {
         case 1:
             readProductInformation();
