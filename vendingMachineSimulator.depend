@@ -1,15 +1,5 @@
 # depslib dependency file v1.0
-1573032312 source:c:\users\s1155138058\desktop\vendingmachinesim\main.c
-	<stdio.h>
-	<string.h>
-
-1573032312 
-
-1573028700 source:/home/sonngh/Vending-Machine-Simulator/main.c
-	<stdio.h>
-	<string.h>
-
-1576002601 source:/home/sonngh/Vending-Machine-Simulator/vendingMachineSim.c
+1664078895 source:c:\users\sonng\vending-machine-simulator\vendingmachinesimulator.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

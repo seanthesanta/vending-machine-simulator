@@ -249,6 +249,7 @@ void pressProductButton(Machine *machine, Product *products)
             quit = 1;
             break;
         case 0:
+            quit = 1;
             break;
         default:
             printf("Invalid choice!\n");
